@@ -1,0 +1,556 @@
+/* Keep all animations at the top */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate4 {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes dash4 {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dashoffset: -125px;
+    }
+}
+
+/* Base styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('smcc-bg (1).webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 15px;
+    animation: fadeUp 1s ease-in-out;
+    overflow: hidden;
+    background-color: #0d6efd;
+}
+
+.equipments-container {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Overlay and content styles */
+.scan-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.scan-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.status-icon {
+    width: 64px;
+    height: 64px;
+    margin: 20px auto;
+}
+
+.status-text {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+}
+
+.equipment-item {
+    margin-bottom: 10px;
+}
+
+.equipment-item label {
+    margin-left: 8px;
+}
+
+.badge {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.scan-content h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+}
+
+.status-container {
+    padding: 20px;
+}
+
+#pendingStatus {
+    display: none;
+}
+
+#approvedStatus {
+    display: none;
+    background-color: #4CAF50;
+    padding: 30px;
+    border-radius: 8px;
+    color: white;
+}
+
+#rejectedStatus {
+    display: none;
+    background-color: #DC3545;
+    padding: 30px;
+    border-radius: 8px;
+    color: white;
+}
+
+#approvedStatus img, #rejectedStatus img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.status-message {
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Update Status styles */
+#pendingStatus, #approvedStatus, #rejectedStatus {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+    position: relative; /* Add this */
+}
+
+/* Update close button */
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Specific color for pending status close button */
+#pendingStatus .close-btn {
+    color: #333;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#pendingStatus .close-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#approvedStatus {
+    background-color: #28a745;
+    color: white;
+}
+
+#rejectedStatus {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Add status icons */
+.status-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.status-icon.approved {
+    content: url(approved.png)
+}
+
+.status-icon.rejected {
+    content: url(rejected.png);
+}
+
+.status-label {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 10px 0;
+}
+
+/* Update scan-content for better positioning */
+.scan-content {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove duplicate .scan-content definitions */
+
+.status-container {
+    padding: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+
+#pendingStatus {
+    background-color: #ffc107;
+    color: #000;
+}
+
+#approvedStatus {
+    background-color: #28a745;
+    color: white;
+}
+
+#rejectedStatus {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Remove duplicate status styles */
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+#pendingStatus {
+    background-color: #ffc107;
+}
+
+.status-text {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.2;
+    word-wrap: break-word;
+}
+
+#approvedStatus .status-text {
+    color: white;
+}
+
+#rejectedStatus .status-text {
+    color: white;
+}
+
+#pendingStatus .status-text {
+    color: black;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+    display: block;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Input styles */
+input[type="date"] {
+    position: relative;
+    padding-right: 30px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+/* Error styles */
+.error {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    width: 320px;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    background: #EF665B;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px -3px #111;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: none;
+}
+
+.error__icon {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-2px);
+    margin-right: 8px;
+}
+
+.error__icon path,
+.error__close path {
+    fill: #fff;
+}
+
+.error__title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+}
+
+.error__close {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.booking-status-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.booking-status-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    min-width: 300px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#bookingStatus {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}
