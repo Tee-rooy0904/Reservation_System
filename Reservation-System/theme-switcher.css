@@ -1,0 +1,47 @@
+.theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Move all the switch-related styles to this file */
+.switch {
+    --toggle-size: 0.5;  /* Reduced size */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 170px;
+    height: 90px;
+    background-color: #b7cecc;
+    border-radius: 999px;
+    transition: .4s;
+    cursor: pointer;
+    transform: scale(var(--toggle-size));
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a1a !important;
+}
+
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+body.dark-mode h1,
+body.dark-mode label {
+    color: #ffffff;
+}
+
+body.dark-mode .form-control {
+    background-color: #3d3d3d;
+    border-color: #4d4d4d;
+    color: #ffffff;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #4a69dd;
+}
